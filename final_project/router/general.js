@@ -7,7 +7,21 @@ const public_users = express.Router();
 
 public_users.post("/register", (req,res) => {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  let user = req.body.username;
+  let pass = req.body.password;
+  //console.log(users)
+  if(!user){
+    return res.status(400).json({message: "Missing username"})
+  }
+  if(!pass){
+    return res.status(400).json({message: "Missing password"})
+  }
+  if(isValid(user)){
+    users.push({"username":user, "password":pass})
+    return res.status(200).json("Registered user " + user + "!")
+  }else{
+    return res.status(400).json({message: "Invalid username"})
+  }
 });
 
 // Get the book list available in the shop
@@ -65,7 +79,7 @@ public_users.get('/review/:isbn',function (req, res) {
   const ISBN = req.params.isbn;
   let book = books[ISBN];
   if(book){
-    return res.send(JSON.stringify(book['reviews"], null, 4));
+    return res.send(JSON.stringify(book["reviews"], null, 4));
   }else{
     return res.status(404).json({message:"ISBN not found"});
   }
