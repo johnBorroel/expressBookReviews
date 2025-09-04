@@ -27,20 +27,30 @@ public_users.post("/register", (req,res) => {
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
   //Write your code here
-  return res.send(JSON.stringify(books, null, 4));
+  let promise = new Promise((resolve, reject) => {
+    resolve("Promise resolved.");
+    })
+  promise.then((successMessage)=>{
+    return res.send(JSON.stringify(books, null, 4));
+    })
 });
 
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn',function (req, res) {
   //Write your code here
-  const ISBN = req.params.isbn;
-  let book = books[ISBN];
-  if(book){
-    return res.send(JSON.stringify(book, null, 4));
-  }else{
-    return res.status(404).json({message:"ISBN not found"});
-  }
- });
+  let promise = new Promise((resolve, reject) => {
+    resolve("Promise resolved.");
+  })
+  promise.then((successMessage)=>{
+    const ISBN = req.params.isbn;
+    let book = books[ISBN];
+    if(book){
+        return res.send(JSON.stringify(book, null, 4));
+    }else{
+        return res.status(404).json({message:"ISBN not found"});
+    }
+  })
+});
   
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
