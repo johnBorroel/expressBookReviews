@@ -55,17 +55,21 @@ public_users.get('/isbn/:isbn',function (req, res) {
 // Get book details based on author
 public_users.get('/author/:author',function (req, res) {
   //Write your code here
-  const author = req.params.author;
-  const keys = Object.keys(books);
-  const matches = keys.filter((key)=>books[key]["author"] === author)
-  if(matches.length>0){
-    let bookDetails = {};
-    matches.forEach((isbn, index)=>bookDetails[isbn]=books[isbn]);
-    return res.send(JSON.stringify(bookDetails, null, 4));
-  }else{
-    return res.status(404).json({message:"Author not found"})
-  }
-  
+  let promise = new Promise((resolve, reject) => {
+    resolve("Promise resolved.");
+  })
+  promise.then((successMessage)=>{
+    const author = req.params.author;
+    const keys = Object.keys(books);
+    const matches = keys.filter((key)=>books[key]["author"] === author)
+    if(matches.length>0){
+        let bookDetails = {};
+        matches.forEach((isbn, index)=>bookDetails[isbn]=books[isbn]);
+        return res.send(JSON.stringify(bookDetails, null, 4));
+    }else{
+        return res.status(404).json({message:"Author not found"})
+    }
+  })
 });
 
 // Get all books based on title
